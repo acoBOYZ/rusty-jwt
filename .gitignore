@@ -34,3 +34,4 @@ dist-ssr
 *.DS_Store
 types
 lib
+.cmd
