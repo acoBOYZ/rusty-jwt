@@ -2,20 +2,62 @@
   "name": "rusty-jwt",
   "version": "1.1.0",
   "description": "Rust-based, optionally cached JWT implementation",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "typings": "types/index.d.ts",
+  "types": "types/index.d.ts",
+  "files": [
+    "lib",
+    "types"
+  ],
+  "author": "ACO .",
+  "homepage": "https://github.com/acoBOYZ/rusty-jwt",
+  "contributors": [
+    {
+      "name": "Ahmet Cevdet ÖZTÜRK",
+      "url": "https://github.com/acoBOYZ"
+    }
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "xx"
+    "url": "https://github.com/acoBOYZ/rusty-jwt"
+  },
+  "bugs": {
+    "url": "https://github.com/acoBOYZ/rusty-jwt/issues"
   },
   "keywords": [
-    "Rust",
-    "Node",
-    "JWT",
-    "Cache"
+    "rust",
+    "node",
+    "jwt"
   ],
-  "author": "ACO .",
-  "license": "MIT"
+  "license": "Apache-2.0",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@lukeed/ms": "^2.0.2",
+    "@node-rs/jsonwebtoken": "^0.5.7",
+    "@node-rs/xxhash": "^1.7.4",
+    "mnemonist": "^0.39.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.8",
+    "@typescript-eslint/eslint-plugin": "^8.11.0",
+    "@typescript-eslint/parser": "^8.11.0",
+    "eslint": "^9.13.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^17.11.1",
+    "eslint-plugin-promise": "^7.1.0",
+    "typescript": "^5.6.3"
+  }
 }
