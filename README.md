@@ -4,14 +4,19 @@
 Rusty JWT is a Rust-based, optionally cached JSON Web Token (JWT) implementation for Node.js, designed for efficient signing and verification of JWTs. It utilizes the `@node-rs/jsonwebtoken` library, providing Rust-level performance, and includes optional caching via an LRU cache for frequently used JWTs.
 
 ## Table of Contents
-1. [Features](#features)
-2. [Installation](#installation)
-3. [Usage](#usage)
-4. [Configuration Options](#configuration-options)
-5. [Cache Management](#cache-management)
-6. [API Reference](#api-reference)
-7. [Contributing](#contributing)
-8. [License](#license)
+- [Rusty JWT](#rusty-jwt)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Configuration Options](#configuration-options)
+  - [Cache Management](#cache-management)
+  - [API Reference](#api-reference)
+    - [`new RustJWT(options: RustJWTOptions)`](#new-rustjwtoptions-rustjwtoptions)
+    - [`sign(payload: JWTPayload): string`](#signpayload-jwtpayload-string)
+    - [`verify(token: string): JWTPayload`](#verifytoken-string-jwtpayload)
+  - [Contributing](#contributing)
+  - [License](#license)
 
 ## Features
 - **Rust-based performance**: Uses the `@node-rs/jsonwebtoken` library for faster token processing.
@@ -69,15 +74,15 @@ try {
 
 The `RustJWT` class accepts the following configuration options:
 
-| Option       | Type                  | Default   | Description                                                   |
-|--------------|-----------------------|-----------|---------------------------------------------------------------|
-| `algorithm`  | `Algorithm`           | 'RS256'   | JWT signing algorithm (e.g., 'RS256', 'HS256').               |
-| `expiresIn`  | `string | number`     | '1d'      | Token expiration time (e.g., '1h', '2d', or a number in ms).  |
-| `privateKey` | `string | Uint8Array` | Required  | Private key for signing the JWT.                             |
-| `publicKey`  | `string | Uint8Array` | Required  | Public key for verifying the JWT.                            |
-| `cache`      | `boolean`             | false     | Enables or disables the LRU cache for verification results.  |
-| `cacheTTL`   | `number`              | 0         | Cache TTL in milliseconds.                                   |
-| `cacheSize`  | `number`              | 1000      | Maximum number of entries in the LRU cache.                  |
+| Option       | Type                  | Default   | Description                                                 |
+|--------------|-----------------------|-----------|-------------------------------------------------------------|
+| `algorithm`  | `Algorithm`           | Required  | JWT signing algorithm (e.g., 'RS256', 'HS256').             |
+| `privateKey` | `string \ Uint8Array` | Required  | Private key for signing the JWT.                            |
+| `publicKey`  | `string \ Uint8Array` | Required  | Public key for verifying the JWT.                           |
+| `expiresIn`  | `string \ number`     | '1d'      | Token expiration time (e.g., '1h', '2d', or a number in ms).|
+| `cache`      | `boolean`             | false     | Enables or disables the LRU cache for verification results. |
+| `cacheTTL`   | `number`              | 0         | Cache TTL in milliseconds.                                  |
+| `cacheSize`  | `number`              | 1000      | Maximum number of entries in the LRU cache.                 |
 
 ## Cache Management
 

@@ -35,4 +35,4 @@ dist-ssr
 types
 lib
 .cmd
-*.eslintrc.cjs
+.eslintrc.js

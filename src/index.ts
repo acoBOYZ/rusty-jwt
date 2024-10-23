@@ -5,12 +5,12 @@ import {
   Validation,
   verifySync
 } from '@node-rs/jsonwebtoken'
-import { parse } from '@lukeed/ms';
-import LRUCache from 'mnemonist/lru-cache';
-import { hashToken } from './utils';
+import { parse } from '@lukeed/ms'
+import LRUCache from 'mnemonist/lru-cache'
+import { hashToken } from './utils'
 
 export interface RustJWTOptions {
-  algorithm?: Algorithm;
+  algorithm: keyof typeof Algorithm;
   expiresIn?: string | number;
   privateKey: string | Uint8Array;
   publicKey: string | Uint8Array;
@@ -29,13 +29,13 @@ interface CacheEntry {
 export class RustJWT {
   private privateKey: string | Uint8Array;
   private publicKey: string | Uint8Array;
-  private algorithm: Algorithm;
+  private algorithm: keyof typeof Algorithm;
   private expiresIn: string | number | undefined;
   private cacheTTL: number;
   private cache: LRUCache<string, CacheEntry> | undefined;
 
   constructor(options: RustJWTOptions) {
-    this.algorithm = options.algorithm || Algorithm.RS256;
+    this.algorithm = options.algorithm || 'RS256';
     this.expiresIn = options.expiresIn || '1d';
     this.privateKey = options.privateKey;
     this.publicKey = this.loadPublicKey(options.publicKey);
@@ -108,7 +108,7 @@ export class RustJWT {
         iat,
       };
 
-      const header: Header = { algorithm: this.algorithm };
+      const header: Header = { algorithm: this.algorithm as Algorithm };
 
       return signSync(tokenPayload, this.privateKey, header);
     } catch (error) {
@@ -126,7 +126,7 @@ export class RustJWT {
       if (this.cache) {
         const cacheEntry = this.cache.get(hashToken(token));
         if (cacheEntry) {
-          const now = Date.now();        
+          const now = Date.now();
           if (now < cacheEntry.ttl) {
             return this.handleCachedResult(cacheEntry.payload);
           }
@@ -134,7 +134,7 @@ export class RustJWT {
       }
 
       const validation: Validation = {
-        algorithms: [this.algorithm],
+        algorithms: [this.algorithm as Algorithm],
         validateExp: true,
       };
       const payload = verifySync(token, this.publicKey, validation) as JWTPayload;
