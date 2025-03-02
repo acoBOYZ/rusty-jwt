@@ -1,6 +1,6 @@
 {
   "name": "rusty-jwt",
-  "version": "1.2.0",
+  "version": "1.2.21",
   "description": "Rust-based, optionally cached JWT implementation",
   "main": "lib/index.js",
   "typings": "types/index.d.ts",
@@ -18,8 +18,8 @@
     }
   ],
   "scripts": {
-    "build": "tsc",
-    "prepare": "npm run build"
+    "build": "rm -rf ./types ./lib && tsc",
+    "prepare": "rm -rf ./types ./lib && bun run build"
   },
   "repository": {
     "type": "git",
@@ -45,17 +45,19 @@
   },
   "dependencies": {
     "@lukeed/ms": "^2.0.2",
-    "@node-rs/jsonwebtoken": "^0.5.7",
-    "@node-rs/xxhash": "^1.7.4",
-    "mnemonist": "^0.39.8"
+    "@node-rs/jsonwebtoken": "^0.5.9",
+    "@node-rs/jsonwebtoken-linux-arm64-gnu": "^0.5.9",
+    "@node-rs/xxhash": "^1.7.6",
+    "@node-rs/xxhash-linux-x64-gnu": "^1.7.6",
+    "mnemonist": "^0.40.3"
   },
   "devDependencies": {
-    "@types/node": "^22.7.9",
-    "@typescript-eslint/eslint-plugin": "^8.11.0",
-    "@typescript-eslint/parser": "^8.11.0",
-    "eslint": "^8.0.1",
+    "@types/node": "^22.13.8",
+    "@typescript-eslint/eslint-plugin": "^8.25.0",
+    "@typescript-eslint/parser": "^8.25.0",
+    "eslint": "^9.21.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.31.0",
-    "typescript": "^5.6.3"
+    "typescript": "^5.8.2"
   }
 }
