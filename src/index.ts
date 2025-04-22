@@ -1,19 +1,21 @@
-import {
+import type {
   Algorithm,
   Header,
-  signSync,
   Validation,
+} from '@node-rs/jsonwebtoken'
+import {
+  signSync,
   verifySync
 } from '@node-rs/jsonwebtoken'
 import { parse } from '@lukeed/ms'
-import LRUCache from 'mnemonist/lru-cache'
+import { LRUCache } from 'mnemonist'
 import { hashToken } from './utils'
 
 export interface RustJWTOptions {
   algorithm: keyof typeof Algorithm;
-  expiresIn?: string | number;
   privateKey: string | Uint8Array;
   publicKey: string | Uint8Array;
+  expiresIn?: string | number;
   cache?: boolean;
   cacheTTL?: number;
   cacheSize?: number;
@@ -46,10 +48,13 @@ export class RustJWT {
   }
 
   private loadPublicKey(publicKey: string | Uint8Array): string | Uint8Array {
+    if (publicKey) return publicKey
+
     if (['HS256', 'HS384', 'HS512'].includes(this.algorithm)) {
       return this.privateKey;
+    } else {
+      throw new Error(`[RustJWT] Missing publicKey for algorithm ${this.algorithm}`);
     }
-    return publicKey;
   }
 
   private cacheSet(cacheKey: string, payload: JWTPayload | Error): JWTPayload | Error {
@@ -138,6 +143,13 @@ export class RustJWT {
         validateExp: true,
       };
       const payload = verifySync(token, this.publicKey, validation) as JWTPayload;
+      
+      const keys = Object.keys(payload);
+      const meaningfulKeys = keys.filter(k => !['exp', 'iat'].includes(k));
+  
+      if (meaningfulKeys.length === 0) {
+        throw new Error('Unauthorized: Token is invalid or signature not verified');
+      }
 
       return this.cacheSet(token, payload) as JWTPayload;
     } catch (error) {

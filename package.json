@@ -1,6 +1,6 @@
 {
   "name": "rusty-jwt",
-  "version": "1.2.21",
+  "version": "1.2.22",
   "description": "Rust-based, optionally cached JWT implementation",
   "main": "lib/index.js",
   "typings": "types/index.d.ts",
